@@ -11,8 +11,9 @@
     "test": "node test.js"
   },
   "dependencies": {
-    "ejs": "^3.1.5",
-    "express": "^4.15.2"
+    "ejs": "^3.1.8",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20"
   },
   "devDependencies": {
     "got": "^11.3.0",
