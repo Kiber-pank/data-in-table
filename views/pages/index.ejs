@@ -8,28 +8,12 @@
   <div class="container">
     <%- include ("../partials/login.ejs") %>
     <%- include ("../partials/nav.ejs") %>
+    <% if (user) { %>
+      <%- include ("../partials/newTicket.ejs") %>
+      <%- include ("../partials/index.ejs") %>
+    <% } %>
 
   </div>
-  <script>
-    function signup(e){
-      let form_data = $("#login").serializeArray();
-      //console.log(data);
-      let data = {};
-      for (let i = 0; i < form_data.length; i++){
-        data[form_data[i]['name']] = form_data[i]['value'];
-      }
 
-      $.ajax({
-      url: '/user/signup',
-      type: 'post',
-      data: data,
-      success: function(result, err) {
-        if (result) {
-          
-        }
-      }
-    })
-    }
-  </script>
 </body>
 </html>

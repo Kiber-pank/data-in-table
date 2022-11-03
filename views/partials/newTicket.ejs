@@ -1,0 +1,86 @@
+<!-- Modal -->
+<div class="modal fade" id="newTicket" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Создать билет</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form >
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="number_ticket" class="form-label">Номер билета</label>
+              <input type="number" class="form-control" id="number_ticket" name="number_ticket" required>
+            </div>
+            <div class="md-3">
+              <label for="type_ticket" class="form-label">Тип билета</label>
+              <select class="form-select" id="type_ticket" name="type_ticket" required>
+                <option selected value="">Choose...</option>
+                <option>...</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-3">
+            <div class="mb-3">
+              <label for="data_sale" class="form-label">Дата продажи</label>
+              <input type="date" class="form-control" id="data_sale" name="data_sale">
+            </div>
+            <div class="md-3">
+              <label for="kass" class="form-label">Касса</label>
+              <select class="form-select" id="kass" name="kass" required>
+                <option selected value="">Choose...</option>
+                <option>...</option>
+              </select>
+            </div>
+              <div class="md-3">
+                <label for="cashier" class="form-label">Кассир</label>
+                <select class="form-select" id="cashier" name="cashier" required>
+                  <option selected value="">Choose...</option>
+                  <option>...</option>
+                </select>
+              </div>
+          </div>
+          <div class="col-3">
+            <div class="md-3">
+              <label for="airline" class="form-label">Авиокомпания</label>
+              <select class="form-select" id="airline" name="airline" required>
+                <option selected value="">Choose...</option>
+                <option>...</option>
+              </select>
+            </div>
+              <div class="md-3">
+                <label for="direction" class="form-label">Направление</label>
+                <select class="form-select" id="direction" name="direction" required>
+                  <option selected value="">Choose...</option>
+                  <option>...</option>
+                </select>
+              </div>
+          </div>
+          <div class="col-3">
+            <div class="md-3">
+              <label for="rate" class="form-label">Тариф</label>
+              <select class="form-select" id="rate" name="rate" required>
+                <option selected value="">Choose...</option>
+                <option>...</option>
+              </select>
+            </div>
+            <div class="md-3">
+              <label for="client" class="form-label">Клиент</label>
+              <select class="form-select" id="client" name="client" required>
+                <option selected disabled value="">Choose...</option>
+                <option>...</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Создать</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
