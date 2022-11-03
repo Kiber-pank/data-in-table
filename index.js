@@ -59,5 +59,5 @@ express()
   // Роутер запросов работы с пользователем (логин регистрация, выход)
   .use('/user', usersRouter)
 
-  .get('/', (req, res) => res.render('pages/index'))
+  .get('/', (req, res) => res.render('pages/index', { user: req.user }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`))

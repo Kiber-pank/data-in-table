@@ -30,8 +30,8 @@ passport.deserializeUser(function (id, done) {
 // Вход пользователя
 passport.use(new LocalStrategy({
     // Переписываем переменные из того что пришло
-    usernameField: 'inputEmail',
-    passwordField: 'inputPassword',
+    usernameField: 'email',
+    passwordField: 'password',
     passReqToCallback: true
 },
     function (req, username, password, done) {
@@ -60,8 +60,8 @@ passport.use(new LocalStrategy({
 passport.use('signup', new LocalStrategy({
     // Переписываем переменные из того что пришло
     // passReqToCallback: true,
-    usernameField: 'inputEmail',
-    passwordField: 'inputPassword',
+    usernameField: 'email',
+    passwordField: 'password',
     passReqToCallback: true
 },
     function (req, username, password, done) {
@@ -82,11 +82,8 @@ passport.use('signup', new LocalStrategy({
                     // если пользователя с таки адресом электронной почты
                     // в базе не существует, создать пользователя
                     let newUser = new User();
-                    // установка локальных прав доступа пользователя
-                    newUser.FirstName = req.body.inputFirstName;
-                    newUser.LastName = req.body.inputLastName;
-                    newUser.e_mail = username;
-                    newUser.phone = req.body.phone
+                    // записываем данные пользователя
+                    newUser.email = username;
                     newUser.setPassword(password);
                     // сохранения пользователя
                     newUser.save(function (err) {
@@ -95,7 +92,6 @@ passport.use('signup', new LocalStrategy({
                             throw err;
                         }
                         console.log(`Зарегистрирован пользователь`, newUser.id);
-                        //mail.newUser(newUser);
                         return done(null, newUser);
                     });
                 }
