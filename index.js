@@ -13,6 +13,7 @@ const connection = require('./connection/connection.js');
 
 const usersRouter = require('./routers/UserRouter.js');
 const catalogsRouter = require('./routers/CatalogsRouter.js');
+const infoRouter = require('./routers/infoRouter.js');
 
 require('./passport/config.js');
 
@@ -60,8 +61,9 @@ express()
   // Роутер запросов работы с пользователем (логин регистрация, выход)
   .use('/user', usersRouter)
 
-  .post('/catalogs', auth, catalogsRouter)
-  .get('/catalogs', auth, (req, res) => res.render('pages/catalogs', { user: req.user }))
+  .use('/catalogs', auth, catalogsRouter)
+
+  .use('/info', auth, infoRouter)
 
   .get('/', (req, res) => res.render('pages/index', { user: req.user }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`))

@@ -2,9 +2,107 @@
 <html>
 <head>
   <%- include ("../partials/header.ejs") %>
+
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"/>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" />
+  <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+  
+
 </head>
 
 <body>
+
+  <div class="modal fade" id="change_modal" tabindex="-1" aria-labelledby="change-Label" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="change-Label"></h1><!-- Заголовок -->
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+            aria-label="Close"></button>
+        </div>
+        <form id="change_form" class="needs-validation was-validated">
+          <input type="hidden" id="chapter" name="chapter" value="">
+          <input type="hidden" id="changeable_id" name="changeable_id" value="">
+          <div class="modal-body" id="change_modal_body">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" onclick="delete_changeable()">Удалить</button>
+            <button type="button" class="btn btn-primary"  onclick="change_changeable()">Изменить</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var changeModal = new bootstrap.Modal( document.getElementById("change_modal"), {});
+
+    var airline_table;
+
+    function change_changeable() {
+      let data_arr = $('#change_form').serializeArray();
+      var returnArray = {};
+      for (var i = 0; i < data_arr.length; i++){
+          returnArray[data_arr[i]['name']] = data_arr[i]['value'];
+      }
+
+      $.ajax({
+        url: `catalogs/change_chapter`,
+        type: 'POST',
+        data: returnArray,
+        success: function(result) {
+          if(result){
+            close_modal(result);
+          }
+        }
+      })
+    }
+
+    function delete_changeable() {
+      let data = {
+        chapter: $("#chapter").val(),
+        changeable_id: $("#changeable_id").val()
+      }
+
+      $.ajax({
+        url: `catalogs/delete_chapter`,
+        type: 'POST',
+        data: data,
+        success: function(result) {
+          if(result){
+            close_modal(result);
+          }
+        }
+      })
+    }
+
+    
+
+    function close_modal(catalog) {
+      changeModal.hide();
+      $("#chapter").val("");
+      $("#changeable_id").val("");
+      $("#change-Label").text("");
+
+      $(`#change_modal_body`).empty();
+      $(`#tbody_${catalog}`).empty();
+
+      switch (catalog) {
+        case "airline":
+          airline_table.destroy();
+          upload_airline();
+          break;
+      
+        default:
+          break;
+      }
+    }
+  </script>
+
   <div class="container">
     <nav class="navbar navbar-expand-lg bg-light">
       <div class="container-fluid">
@@ -24,17 +122,17 @@
             <% } else { %>
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="/">Регистрация билетов</a>
+                  <a class="nav-link" aria-current="page" href="./">Регистрация билетов</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="#">Каталоги</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="/info">Информация</a>
+                  <a class="nav-link" aria-current="page" href="./info">Информация</a>
                 </li>
               </ul>
               
-              <a class="btn btn-primary" href="/user/logout" role="button">Выйти</a>
+              <a class="btn btn-primary" href="./user/logout" role="button">Выйти</a>
           <% } %>
             
             <!-- <button class="btn btn-primary">Вы</button> -->
@@ -42,7 +140,12 @@
       </div>
     </nav>
     <% if (user) { %>
-      <%- include ("../partials/catalogs.ejs") %>
+      <div class="card">
+        <div class="card-body">
+      <%- include ("../partials/catalogs_nav.ejs") %>
+      <%- include ("../partials/catalogs_airlines.ejs") %>
+        </div>
+      </div>
     <% } %>
 
   </div>

@@ -24,17 +24,17 @@
             <% } else { %>
               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="/">Регистрация билетов</a>
+                  <a class="nav-link" aria-current="page" href="./">Регистрация билетов</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Каталоги</a>
+                  <a class="nav-link" aria-current="page" href="./catalogs">Каталоги</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="/info">Информация</a>
+                  <a class="nav-link active" aria-current="page" href="#">Информация</a>
                 </li>
               </ul>
               
-              <a class="btn btn-primary" href="/user/logout" role="button">Выйти</a>
+              <a class="btn btn-primary" href="./user/logout" role="button">Выйти</a>
           <% } %>
             
             <!-- <button class="btn btn-primary">Вы</button> -->
@@ -42,7 +42,7 @@
       </div>
     </nav>
     <% if (user) { %>
-      <%- include ("../partials/catalogs.ejs") %>
+      <%- include ("../partials/info.ejs") %>
     <% } %>
 
   </div>
