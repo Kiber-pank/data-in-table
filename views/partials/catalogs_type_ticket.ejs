@@ -59,8 +59,15 @@
 
 <script>
   $(document).ready(function () {
+  });
 
+  $('#pills-type-ticket-tab').on('shown.bs.tab', function (e) {
+    if (type_ticket_table) {
+      type_ticket_table.destroy();
+    }
     upload_type_ticket();
+  });
+    
 
     $('#type_ticket_table tbody').on( 'click', 'tr', function () {
       var id = $(this).attr('id');
@@ -86,7 +93,7 @@
       })
 
     });
-});
+
 
 function create_type_ticket() {
   let data_arr = $('#create_type_tickets').serializeArray();

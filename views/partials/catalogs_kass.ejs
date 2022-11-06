@@ -66,9 +66,16 @@
 
 <script>
   $(document).ready(function () {
+  });
 
+  $('#pills-kass-tab').on('shown.bs.tab', function (e) {
+    if (kass_table) {
+      kass_table.destroy();
+    }
+    
     upload_kass();
-
+  });
+  
     $('#kass_table tbody').on( 'click', 'tr', function () {
       var id = $(this).attr('id');
       $.ajax({
@@ -99,7 +106,7 @@
       })
 
     });
-});
+
 
 function create_kass() {
   let data_arr = $('#create_kasses').serializeArray();

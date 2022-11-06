@@ -73,8 +73,15 @@
 
 <script>
   $(document).ready(function () {
+  });
 
+  $('#pills-client-tab').on('shown.bs.tab', function (e) {
+    if (client_table) {
+      client_table.destroy();
+    }
     upload_client();
+  });
+    
 
     $('#client_table tbody').on( 'click', 'tr', function () {
       var id = $(this).attr('id');
@@ -115,7 +122,7 @@
       })
 
     });
-});
+
 
 function create_client() {
   let data_arr = $('#create_clients').serializeArray();

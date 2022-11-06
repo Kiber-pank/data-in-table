@@ -52,7 +52,7 @@
     
     var airline_table;
     var kass_table;
-    var cashiers_table;
+    var cashier_table;
     var client_table;
     var direction_table;
     var type_ticket_table;
@@ -177,42 +177,51 @@
                   <div class="card-body">
                     <%- include ("../partials/catalogs_nav.ejs") %>
                       <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade  show active" id="pills-airline"
+                        <div class="tab-pane fade show active"
+                          id="pills-airline"
                           role="tabpanel"
                           aria-labelledby="pills-airline-tab">
                           <%- include ("../partials/catalogs_airlines.ejs") %>
-                        </div>
-                        <div class="tab-pane fade" id="pills-kass"
-                          role="tabpanel"
-                          aria-labelledby="pills-kass-tab">
-                          <%- include ("../partials/catalogs_kass.ejs") %>
-                        </div>
-                        <div class="tab-pane fade" id="pills-cashiers"
-                          role="tabpanel"
-                          aria-labelledby="pills-cashiers-tab">
-                          <%- include ("../partials/catalogs_cashier.ejs") %>
-                        </div>
-                        <div class="tab-pane fade" id="pills-clients"
-                          role="tabpanel"
-                          aria-labelledby="pills-clients-tab">
-                          <%- include ("../partials/catalogs_client.ejs") %>
-                        </div>
-                        <div class="tab-pane fade" id="pills-directions"
-                          role="tabpanel"
-                          aria-labelledby="pills-directions-tab">
-                          <%- include ("../partials/catalogs_direction.ejs") %>
-                        </div>
-                        <div class="tab-pane fade"
-                          id="pills-type-tickets" role="tabpanel"
-                          aria-labelledby="pills-type-tickets-tab">
-                          <%- include ("../partials/catalogs_type_ticket.ejs") %>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <% } %>
+                          </div>
+                          <div class="tab-pane fade" id="pills-kass"
+                            role="tabpanel"
+                            aria-labelledby="pills-kass-tab">
+                            <%- include ("../partials/catalogs_kass.ejs") %>
+                            </div>
+                            <div class="tab-pane fade" id="pills-cashiers"
+                              role="tabpanel"
+                              aria-labelledby="pills-cashiers-tab">
+                              <%- include ("../partials/catalogs_cashier.ejs")
+                                %>
+                              </div>
+                              <div class="tab-pane fade" id="pills-clients"
+                                role="tabpanel"
+                                aria-labelledby="pills-clients-tab">
+                                <%- include ("../partials/catalogs_client.ejs")
+                                  %>
+                                </div>
+                                <div class="tab-pane fade" id="pills-directions"
+                                  role="tabpanel"
+                                  aria-labelledby="pills-directions-tab">
+                                  <%- include
+                                    ("../partials/catalogs_direction.ejs") %>
+                                  </div>
+                                  <div class="tab-pane fade"
+                                    id="pills-type-tickets" role="tabpanel"
+                                    aria-labelledby="pills-type-tickets-tab">
+                                    <%- include
+                                      ("../partials/catalogs_type_ticket.ejs")
+                                      %>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <% } %>
 
                               </div>
 
+                              <script>
+
+                              </script>
                             </body>
                           </html>

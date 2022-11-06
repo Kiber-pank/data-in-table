@@ -65,8 +65,15 @@
 
 <script>
   $(document).ready(function () {
+  })
 
+  $('#pills-cashier-tab').on('shown.bs.tab', function (e) {
+    if (cashier_table) {
+      cashier_table.destroy();
+    }
     upload_cashier();
+  });
+    
 
     $('#cashier_table tbody').on( 'click', 'tr', function () {
       var id = $(this).attr('id');
@@ -101,7 +108,7 @@
       })
 
     });
-});
+
 
 function create_cashier() {
   let data_arr = $('#create_cashiers').serializeArray();

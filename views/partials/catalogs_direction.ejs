@@ -56,8 +56,15 @@
 
 <script>
   $(document).ready(function () {
+  });
 
+  $('#pills-direction-tab').on('shown.bs.tab', function (e) {
+    if (direction_table) {
+      direction_table.destroy();
+    }
     upload_direction();
+  });
+    
 
     $('#direction_table tbody').on( 'click', 'tr', function () {
       var id = $(this).attr('id');
@@ -85,7 +92,7 @@
       })
 
     });
-});
+
 
 function create_direction() {
   let data_arr = $('#create_directions').serializeArray();
