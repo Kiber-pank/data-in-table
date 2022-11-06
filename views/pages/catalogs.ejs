@@ -1,47 +1,61 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <%- include ("../partials/header.ejs") %>
+  <head>
+    <%- include ("../partials/header.ejs") %>
 
-  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"/>
-  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" />
-  <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-  <script type="text/javascript" src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-  <script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
-  
+      <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"/>
+      <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"/>
+      <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css"
+        />
+      <script type="text/javascript"
+        src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+      <script type="text/javascript"
+        src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+      <script
+        src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+    </head>
 
-</head>
+    <body>
 
-<body>
+      <div class="modal fade" id="change_modal" tabindex="-1"
+        aria-labelledby="change-Label" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="change-Label"></h1><!-- Заголовок -->
+              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+            </div>
+            <form id="change_form" class="needs-validation was-validated">
+              <input type="hidden" id="chapter" name="chapter" value="">
+              <input type="hidden" id="changeable_id" name="changeable_id"
+                value="">
+              <div class="modal-body" id="change_modal_body">
 
-  <div class="modal fade" id="change_modal" tabindex="-1" aria-labelledby="change-Label" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="change-Label"></h1><!-- Заголовок -->
-          <button type="button" class="btn-close" data-bs-dismiss="modal"
-            aria-label="Close"></button>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-danger"
+                  onclick="delete_changeable()">Удалить</button>
+                <button type="button" class="btn btn-primary"
+                  onclick="change_changeable()">Изменить</button>
+              </div>
+            </form>
+          </div>
         </div>
-        <form id="change_form" class="needs-validation was-validated">
-          <input type="hidden" id="chapter" name="chapter" value="">
-          <input type="hidden" id="changeable_id" name="changeable_id" value="">
-          <div class="modal-body" id="change_modal_body">
-
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" onclick="delete_changeable()">Удалить</button>
-            <button type="button" class="btn btn-primary"  onclick="change_changeable()">Изменить</button>
-          </div>
-        </form>
       </div>
-    </div>
-  </div>
 
-  <script>
+      <script>
     var changeModal = new bootstrap.Modal( document.getElementById("change_modal"), {});
-
+    
     var airline_table;
+    var kass_table;
+    var cashiers_table;
+    var client_table;
+    var direction_table;
+    var type_ticket_table;
 
     function change_changeable() {
       let data_arr = $('#change_form').serializeArray();
@@ -89,66 +103,118 @@
       $("#change-Label").text("");
 
       $(`#change_modal_body`).empty();
-      $(`#tbody_${catalog}`).empty();
 
       switch (catalog) {
         case "airline":
           airline_table.destroy();
           upload_airline();
           break;
-      
+        case "kass":
+          kass_table.destroy();
+          upload_kass();
+          break;
+        case "cashier":
+        cashier_table.destroy();
+          upload_cashier();
+            break;
+        case "client":
+        client_table.destroy();
+          upload_client();
+            break;
+        case "direction":
+        direction_table.destroy();
+        direction_client();
+            break;
+        case "type_ticket":
+        type_ticket_table.destroy();
+        type_ticket_client();
+            break;
         default:
           break;
       }
     }
   </script>
-
-  <div class="container">
-    <nav class="navbar navbar-expand-lg bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#">Ticket sales DB</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    
-          <% if (!user) { %>
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-    
-            </ul>
-            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal">
-              Вход
+      <div class="container">
+        <nav class="navbar navbar-expand-lg bg-light">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">Ticket sales DB</a>
+            <button class="navbar-toggler" type="button"
+              data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
             </button>
-            <% } else { %>
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="./">Регистрация билетов</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="#">Каталоги</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" aria-current="page" href="./info">Информация</a>
-                </li>
-              </ul>
-              
-              <a class="btn btn-primary" href="./user/logout" role="button">Выйти</a>
-          <% } %>
-            
-            <!-- <button class="btn btn-primary">Вы</button> -->
-        </div>
-      </div>
-    </nav>
-    <% if (user) { %>
-      <div class="card">
-        <div class="card-body">
-      <%- include ("../partials/catalogs_nav.ejs") %>
-      <%- include ("../partials/catalogs_airlines.ejs") %>
-        </div>
-      </div>
-    <% } %>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <% if (!user) { %>
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-  </div>
+                </ul>
+                <button type="button" class="btn btn-outline-primary"
+                  data-bs-toggle="modal" data-bs-target="#loginModal">
+                  Вход
+                </button>
+                <% } else { %>
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="./">Регистрация
+                        билетов</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="#">Каталоги</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="./info">Информация</a>
+                    </li>
+                  </ul>
 
-</body>
-</html>
+                  <a class="btn btn-primary" href="./user/logout" role="button">Выйти</a>
+                  <% } %>
+
+                    <!-- <button class="btn btn-primary">Вы</button> -->
+                  </div>
+                </div>
+              </nav>
+              <% if (user) { %>
+                <div class="card">
+                  <div class="card-body">
+                    <%- include ("../partials/catalogs_nav.ejs") %>
+                      <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade  show active" id="pills-airline"
+                          role="tabpanel"
+                          aria-labelledby="pills-airline-tab">
+                          <%- include ("../partials/catalogs_airlines.ejs") %>
+                        </div>
+                        <div class="tab-pane fade" id="pills-kass"
+                          role="tabpanel"
+                          aria-labelledby="pills-kass-tab">
+                          <%- include ("../partials/catalogs_kass.ejs") %>
+                        </div>
+                        <div class="tab-pane fade" id="pills-cashiers"
+                          role="tabpanel"
+                          aria-labelledby="pills-cashiers-tab">
+
+                        </div>
+                        <div class="tab-pane fade" id="pills-clients"
+                          role="tabpanel"
+                          aria-labelledby="pills-clients-tab">
+
+                        </div>
+                        <div class="tab-pane fade" id="pills-directions"
+                          role="tabpanel"
+                          aria-labelledby="pills-directions-tab">
+
+                        </div>
+                        <div class="tab-pane fade"
+                          id="pills-type-tickets" role="tabpanel"
+                          aria-labelledby="pills-type-tickets-tab">
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% } %>
+
+                              </div>
+
+                            </body>
+                          </html>

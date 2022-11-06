@@ -1,0 +1,158 @@
+<!-- Modal -->
+<div class="modal fade" id="add-kass" tabindex="-1"
+  aria-labelledby="add-kass-Label" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="add-kass-Label">Создать кассу</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <form id="create_kasses" class="needs-validation was-validated" >
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <div class="mb-3">
+                <label for="number" class="form-label">Номер кассы</label>
+                <input type="text" class="form-control" name="number" required>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="mb-3">
+                <label for="adress" class="form-label">Адресс кассы</label>
+                <input type="text" class="form-control" name="address" required>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+            data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="create_kass()">Создать</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-kass" role="tabpanel"
+    aria-labelledby="pills-kass-tab">
+    <div class="card">
+      <div class="card-body">
+        <table id="kass_table" class="table table-striped"
+          style="width:100%">
+          <thead>
+            <tr>
+              <th>Номер кассы</th>
+              <th>Адрес кассы</th>
+            </tr>
+          </thead>
+          <tbody>
+
+          </tbody>
+          <tfoot>
+            <tr>
+              <th>Номер кассы</th>
+              <th>Адрес кассы</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  $(document).ready(function () {
+
+    upload_kass();
+
+    $('#kass_table tbody').on( 'click', 'tr', function () {
+      var id = $(this).attr('id');
+      $.ajax({
+        url: `/catalogs/kass/${id}`,
+        type: 'GET',
+        success: function(al) {
+          $("#chapter").val('kass');
+          $("#changeable_id").val(id);
+          $("#change-Label").text('Изменить кассу');
+          $("#change_modal_body").append(
+            '<div class="row">'+
+            '<div class="col-12">'+
+              '<div class="mb-3">'+
+                '<label for="number" class="form-label">Номер кассы</label>'+
+                `<input type="text" class="form-control" name="number" value="${al.number}" required>`+
+              '</div>'+
+            '</div>'+
+            '<div class="col-12">'+
+              '<div class="mb-3">'+
+                '<label for="adress" class="form-label">Адрес</label>'+
+                `<input type="text" class="form-control" name="address" value="${al.address}" required>`+
+              '</div>'+
+            '</div>'+
+          '</div>' );
+        
+            changeModal.show();
+        }
+      })
+
+    });
+});
+
+function create_kass() {
+  let data_arr = $('#create_kasses').serializeArray();
+      var returnArray = {};
+      for (var i = 0; i < data_arr.length; i++){
+          returnArray[data_arr[i]['name']] = data_arr[i]['value'];
+      }
+
+      $.ajax({
+        url: `catalogs/create_kasses`,
+        type: 'POST',
+        data: returnArray,
+        success: function(result) {
+          if(result){
+            $('#create_kasses').trigger("reset");
+            $('#add-kass').modal('toggle');
+            kass_table.destroy();
+            upload_kass();
+          }
+        }
+      })
+}
+
+function upload_kass() {
+  $.ajax({
+        url: `/catalogs/kasses`,
+        type: 'GET',
+        success: function(al) {
+            kass_table = $('#kass_table').DataTable({
+            language: {"url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Russian.json"},
+            data:al,
+            dom: 'Bfrtp',
+            order: [[1, "desc"]], //desc
+            rowId: '_id',
+            displayLength: 10,
+            buttons: {
+                  buttons: [{
+                      text: 'Создать',
+                      attr: {
+                        'class': 'btn btn-primary',
+                        'data-bs-toggle': 'modal',
+                        'data-bs-target': '#add-kass'
+                      },
+                      action: function(e, dt, node, config) {
+                      }
+                  }]
+              },
+            columns: [
+              {"data": "number"},
+              {"data": "address"},
+              ]
+          });
+        }
+      })
+}
+</script>

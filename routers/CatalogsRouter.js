@@ -1,6 +1,7 @@
 const express = require('express');
 const catalogsRouter = express.Router();
 const Airline = require("../models/Airline.js");
+const Kass = require("../models/Kass.js");
 
 
 catalogsRouter.get('/', function (req, res) {
@@ -29,6 +30,31 @@ catalogsRouter.post('/change_chapter', function (req, res) {
                     }
                 });
             break;
+        case "kass":
+            Kass.updateMany({ _id: req.body.changeable_id },
+                {
+                    $set: {
+                        name: req.body.name,
+                        address: req.body.address
+                    }
+                }).
+                exec(function (err, result) {
+                    if (err) {
+                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        res.redirect("../");
+                    } else {
+                        res.send("kass");
+                    }
+                });
+            break;
+        case "cashiers":
+            break;
+        case "client":
+            break;
+        case "direction":
+            break;
+        case "type_ticket":
+            break;
 
         default:
             break;
@@ -53,13 +79,36 @@ catalogsRouter.post('/delete_chapter', function (req, res) {
                 });
 
             break;
+        case "kass":
+            Kass.
+                deleteMany({ _id: req.body.changeable_id }).
+                exec(function (err, result) {
+                    if (err) {
+                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        res.redirect("../");
+                    } else {
+                        console.log("result: ", result);
+                        res.send("kass");
+                    }
+                });
 
+            break;
+        case "cashiers":
+            break;
+        case "client":
+            break;
+        case "direction":
+            break;
+        case "type_ticket":
+            break;
         default:
             break;
     }
 
 });
 
+
+// ----------airline----------//
 catalogsRouter.get('/airlines', function (req, res) {
     Airline.find({})
         .then(
@@ -84,7 +133,6 @@ catalogsRouter.get('/airline/:id', function (req, res) {
             })
 });
 
-
 catalogsRouter.post('/create_airlines', function (req, res) {
 
     const airline = new Airline({
@@ -97,7 +145,7 @@ catalogsRouter.post('/create_airlines', function (req, res) {
         .then(
             result => {
                 console.log(result);
-                res.redirect("/catalogs");
+                res.send("airline");
             },
             error => {
                 console.log("create_airlines = > err: ", error);
@@ -105,11 +153,54 @@ catalogsRouter.post('/create_airlines', function (req, res) {
             })
 });
 
-// ------------------------------------------------------------------------------------
+// ----------cashier----------//
+
+catalogsRouter.get('/kasses', function (req, res) {
+    Kass.find({})
+        .then(
+            result => {
+                res.send(result);
+            },
+            error => {
+                console.log("get_kasses = > err: ", error);
+                res.redirect("./");
+            })
+});
+
+catalogsRouter.get('/kass/:id', function (req, res) {
+    Kass.find({ _id: req.params.id })
+        .then(
+            result => {
+                res.send(result[0]);
+            },
+            error => {
+                console.log("get_kasses = > err: ", error);
+                res.redirect("./");
+            })
+});
+
+catalogsRouter.post('/create_kasses', function (req, res) {
+
+    const kass = new Kass({
+        number: req.body.number,
+        address: req.body.address,
+    });
+
+    kass.save()
+        .then(
+            result => {
+                console.log(result);
+                res.send(result);
+            },
+            error => {
+                console.log("create_kasses = > err: ", error);
+                res.redirect("./");
+            })
+});
+
+// ----------client----------//
+// ----------direction----------//
+// ----------type_ticket----------//
 
 
-
-
-
-//-------------------------------------------------------------------------------------
 module.exports = catalogsRouter;
