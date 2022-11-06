@@ -1,35 +1,34 @@
 <!-- Modal -->
-<div class="modal fade" id="add-airline" tabindex="-1"
-  aria-labelledby="add-airline-Label" aria-hidden="true">
+<div class="modal fade" id="add-client" tabindex="-1"
+  aria-labelledby="add-client-Label" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="add-airline-Label">Добавить авиакомпанию</h1>
+        <h1 class="modal-title fs-5" id="add-client-Label">Добавить клиента</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
-      <form id="create_airlines" class="needs-validation was-validated" >
+      <form id="create_clients" class="needs-validation was-validated" >
         <div class="modal-body">
           <div class="row">
             <div class="col-12">
               <div class="mb-3">
-                <label for="code" class="form-label">Шифр</label>
-                <input type="text" class="form-control" id="code" name="code"
+                <label for="name" class="form-label">Фамилия Имя Отчество</label>
+                <input type="text" class="form-control" name="name"
                   required>
               </div>
             </div>
             <div class="col-12">
               <div class="mb-3">
-                <label for="name" class="form-label">Название</label>
-                <input type="text" class="form-control" id="name" name="name"
-                  required>
+                <label for="type" class="form-label">Серия паспорта</label>
+                <input type="text" class="form-control" name="type" required>
               </div>
             </div>
             <div class="col-12">
               <div class="mb-3">
-                <label for="address" class="form-label">Адрес</label>
-                <input type="text" class="form-control" id="address"
-                  name="address" required>
+                <label for="number" class="form-label">Номер паспорта</label>
+                <input type="text" class="form-control" name="number"
+                  required>
               </div>
             </div>
           </div>
@@ -37,25 +36,23 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary"
             data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" onclick="create_airline()">Создать</button>
+          <button type="button" class="btn btn-primary" onclick="create_client()">Создать</button>
         </div>
       </form>
     </div>
   </div>
 </div>
 
-<div class="tab-content" id="pills-tabContent">
-  <div class="tab-pane fade show active" id="pills-airline" role="tabpanel"
-    aria-labelledby="pills-airline-tab">
+
     <div class="card">
       <div class="card-body">
-        <table id="airline_table" class="table table-striped"
+        <table id="client_table" class="table table-striped"
           style="width:100%">
           <thead>
             <tr>
-              <th>Шифр</th>
-              <th>Название</th>
-              <th>Адрес</th>
+              <th>Фамилия Имя Отчество</th>
+              <th>Серия паспорта</th>
+              <th>Номер паспорта</th>
             </tr>
           </thead>
           <tbody>
@@ -63,53 +60,55 @@
           </tbody>
           <tfoot>
             <tr>
-              <th>Шифр</th>
-              <th>Название</th>
-              <th>Адрес</th>
+              <th>Фамилия Имя Отчество</th>
+              <th>Серия паспорта</th>
+              <th>Номер паспорта</th>
             </tr>
           </tfoot>
         </table>
       </div>
     </div>
-  </div>
-</div>
+
 
 
 <script>
   $(document).ready(function () {
 
-    upload_airline();
+    upload_client();
 
-    $('#airline_table tbody').on( 'click', 'tr', function () {
+    $('#client_table tbody').on( 'click', 'tr', function () {
       var id = $(this).attr('id');
       $.ajax({
-        url: `/catalogs/airline/${id}`,
+        url: `/catalogs/client/${id}`,
         type: 'GET',
         success: function(al) {
-          $("#chapter").val('airline');
+          $("#chapter").val('client');
           $("#changeable_id").val(id);
-          $("#change-Label").text('Изменить авиакомпанию');
+          $("#change-Label").text('Изменить клиента');
           $("#change_modal_body").append(
-                  '<div class="row">'+
-              '<div class="col-12">'+
-                '<div class="mb-3">'+
-                  '<label for="change_code" class="form-label">Шифр</label>'+
-                  `<input type="text" class="form-control" id="change_code" name="code" value="${al.code}" required>`+
-                '</div>'+
-              '</div>'+
-              '<div class="col-12">'+
-                '<div class="mb-3">'+
-                  '<label for="change_name" class="form-label">Название</label>'+
-                  `<input type="text" class="form-control" id="change_name" name="name" value="${al.name}" required>`+
-                '</div>'+
-              '</div>'+
-              '<div class="col-12">'+
-                '<div class="mb-3">'+
-                  '<label for="change_address" class="form-label">Адрес</label>'+
-                  `<input type="text" class="form-control" id="change_address" name="address" value="${al.address}" required>`+
-                '</div>'+
-              '</div>'+
-            '</div>');
+            `<div class="row">`+
+            `<div class="col-12">`+
+              `<div class="mb-3">`+
+                `<label for="name" class="form-label">Фамилия Имя Отчество</label>`+
+                `<input type="text" class="form-control" name="name" value="${al.name}"`+
+                  `required>`+
+              `</div>`+
+            `</div>`+
+            `<div class="col-12">`+
+              `<div class="mb-3">`+
+                `<label for="type" class="form-label">Серия паспорта</label>`+
+                `<input type="text" class="form-control" name="type" value="${al.type}" required>`+
+              `</div>`+
+            `</div>`+
+            `<div class="col-12">`+
+              `<div class="mb-3">`+
+                `<label for="number" class="form-label">Номер паспорта</label>`+
+                `<input type="text" class="form-control" name="number" value="${al.number}"`+
+                  `required>`+
+              `</div>`+
+            `</div>`+
+          `</div>`
+            );
         
             changeModal.show();
         }
@@ -118,23 +117,23 @@
     });
 });
 
-function create_airline() {
-  let data_arr = $('#create_airlines').serializeArray();
+function create_client() {
+  let data_arr = $('#create_clients').serializeArray();
       var returnArray = {};
       for (var i = 0; i < data_arr.length; i++){
           returnArray[data_arr[i]['name']] = data_arr[i]['value'];
       }
 
       $.ajax({
-        url: `catalogs/create_airlines`,
+        url: `catalogs/create_clients`,
         type: 'POST',
         data: returnArray,
         success: function(result) {
           if(result){
-            $('#create_airlines').trigger("reset");
-            $('#add-airline').modal('toggle');
-            airline_table.destroy();
-            upload_airline();
+            $('#create_clients').trigger("reset");
+            $('#add-client').modal('toggle');
+            client_table.destroy();
+            upload_client();
           }
         }
       })
@@ -143,13 +142,13 @@ function create_airline() {
 
 
 
-function upload_airline() {
+function upload_client() {
   $.ajax({
-        url: `/catalogs/airlines`,
+        url: `/catalogs/clients`,
         type: 'GET',
         success: function(al) {
 
-            airline_table = $('#airline_table').DataTable({
+            client_table = $('#client_table').DataTable({
             language: {"url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Russian.json"},
             data:al,
             dom: 'Bfrtp',
@@ -162,16 +161,16 @@ function upload_airline() {
                       attr: {
                         'class': 'btn btn-primary',
                         'data-bs-toggle': 'modal',
-                        'data-bs-target': '#add-airline'
+                        'data-bs-target': '#add-client'
                       },
                       action: function(e, dt, node, config) {
                       }
                   }]
               },
             columns: [
-              {"data": "code"},
               {"data": "name"},
-              {"data": "address"},
+              {"data": "type"},
+              {"data": "number"},
               ]
           });
         }

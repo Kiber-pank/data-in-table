@@ -12,7 +12,7 @@
           <div class="col-3">
             <div class="mb-3">
               <label for="number_ticket" class="form-label">Номер билета</label>
-              <input type="number" class="form-control" id="number_ticket" name="number_ticket" required>
+              <input type="text" class="form-control" id="number_ticket" name="number_ticket" required>
             </div>
             <div class="md-3">
               <label for="type_ticket" class="form-label">Тип билета</label>
@@ -84,3 +84,10 @@
     </div>
   </div>
 </div>
+
+<script>
+  const newTicketModal = document.getElementById('newTicket');
+  newTicketModal.addEventListener('show.bs.modal', event => {
+    console.log("Работает");
+})
+</script>

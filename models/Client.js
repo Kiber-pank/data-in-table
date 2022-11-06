@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const ClientSchema = mongoose.Schema({
     name: { type: String },
-    number_passport: { type: String },
-    type_passport: { type: String },
+    number: { type: String },
+    type: { type: String },
     versionKey: false
 });
 

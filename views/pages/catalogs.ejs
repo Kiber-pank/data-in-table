@@ -69,9 +69,7 @@
         type: 'POST',
         data: returnArray,
         success: function(result) {
-          if(result){
             close_modal(result);
-          }
         }
       })
     }
@@ -123,11 +121,11 @@
             break;
         case "direction":
         direction_table.destroy();
-        direction_client();
+          upload_direction();
             break;
         case "type_ticket":
         type_ticket_table.destroy();
-        type_ticket_client();
+          upload_type_ticket();
             break;
         default:
           break;
@@ -192,22 +190,22 @@
                         <div class="tab-pane fade" id="pills-cashiers"
                           role="tabpanel"
                           aria-labelledby="pills-cashiers-tab">
-
+                          <%- include ("../partials/catalogs_cashier.ejs") %>
                         </div>
                         <div class="tab-pane fade" id="pills-clients"
                           role="tabpanel"
                           aria-labelledby="pills-clients-tab">
-
+                          <%- include ("../partials/catalogs_client.ejs") %>
                         </div>
                         <div class="tab-pane fade" id="pills-directions"
                           role="tabpanel"
                           aria-labelledby="pills-directions-tab">
-
+                          <%- include ("../partials/catalogs_direction.ejs") %>
                         </div>
                         <div class="tab-pane fade"
                           id="pills-type-tickets" role="tabpanel"
                           aria-labelledby="pills-type-tickets-tab">
-
+                          <%- include ("../partials/catalogs_type_ticket.ejs") %>
                         </div>
                       </div>
                     </div>
