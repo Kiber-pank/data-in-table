@@ -65,10 +65,11 @@ passport.use('signup', new LocalStrategy({
     passReqToCallback: true
 },
     function (req, username, password, done) {
-
+        console.log(username);
+        console.log(password);
         findOrCreateUser = function () {
             // поиск пользователя в Mongo с помощью предоставленного E-mail пользователя
-            User.findOne({ e_mail: username }, function (err, user) {
+            User.findOne({ email: username }, function (err, user) {
                 // В случае любых ошибок - возврат
                 if (err) {
                     console.log('Error in SignUp: ' + err);

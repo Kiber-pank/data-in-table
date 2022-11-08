@@ -64,7 +64,7 @@ express()
 
   .use('/catalogs', auth, catalogsRouter)
 
-  .use('/tickets', auth, catalogsRouter)
+  .use('/tickets', auth, ticketsRouter)
 
   //.use('/info', auth, infoRouter)
 
