@@ -22,7 +22,6 @@ const auth = function (req, res, next) {
   if (req.isAuthenticated()) {
     next();
   } else {
-    res.cookie('module', 'index');
     res.redirect('/login');
   }
 }
@@ -59,8 +58,11 @@ express()
   .use(passport.initialize())
   .use(passport.session())
 
-  // Роутер запросов работы с пользователем (логин регистрация, выход)
+  .get('/login', (req, res) => res.render('pages/login'))
+  .get('/signup', (req, res) => res.render('pages/signup'))
+
   .use('/user', usersRouter)
+
 
   .use('/catalogs', auth, catalogsRouter)
 
@@ -68,5 +70,5 @@ express()
 
   //.use('/info', auth, infoRouter)
 
-  .get('/', (req, res) => res.render('pages/index', { user: req.user }))
+  .get('/', auth, (req, res) => res.render('pages/index', { user: req.user }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`))

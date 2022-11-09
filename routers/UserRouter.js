@@ -38,7 +38,7 @@ userRouter.get('/signup', function (req, res) {
 userRouter.post('/signup', function (req, res, next) {
     // В случае положительной проверки запускается регистрация
     passport.authenticate('signup', {
-        successRedirect: res.redirect('/'),
+        successRedirect: '/',
         failureRedirect: '/',
         failureFlash: true
     })(req, res, next);
