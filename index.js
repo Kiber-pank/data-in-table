@@ -14,7 +14,7 @@ const connection = require('./connection/connection.js');
 const usersRouter = require('./routers/UserRouter.js');
 const catalogsRouter = require('./routers/CatalogsRouter.js');
 const ticketsRouter = require('./routers/TicketsRouter.js');
-const infoRouter = require('./routers/infoRouter.js');
+const infoRouter = require('./routers/infoPageRouter.js');
 
 require('./passport/config.js');
 
