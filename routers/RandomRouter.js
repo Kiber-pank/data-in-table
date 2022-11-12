@@ -1,9 +1,9 @@
 const express = require('express');
-const infoRouter = express.Router();
+const randomRouter = express.Router();
 
-infoRouter.get('/', function (req, res) {
+randomRouter.get('/', function (req, res) {
     return res.render('./pages/info', { user: req.user })
 });
 
 //-------------------------------------------------------------------------------------
-module.exports = infoRouter;
+module.exports = randomRouter;

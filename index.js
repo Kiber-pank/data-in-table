@@ -11,10 +11,11 @@ const flash = require('connect-flash');
 const MongoStore = require('connect-mongo');
 const connection = require('./connection/connection.js');
 
+const randomRouter = require('./routers/RandomRouter.js');
 const usersRouter = require('./routers/UserRouter.js');
 const catalogsRouter = require('./routers/CatalogsRouter.js');
 const ticketsRouter = require('./routers/TicketsRouter.js');
-const infoRouter = require('./routers/infoPageRouter.js');
+
 
 require('./passport/config.js');
 
@@ -68,7 +69,7 @@ express()
 
   .use('/tickets', auth, ticketsRouter)
 
-  .use('/info', auth, infoRouter)
+  .use('/info', auth, randomRouter)
 
   .get('/', auth, (req, res) => res.render('pages/index', { user: req.user }))
   .listen(PORT, () => console.log(`Listening on ${PORT}`))
