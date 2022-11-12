@@ -8,19 +8,42 @@ const Direction = require("../models/Direction.js");
 const Type_ticket = require("../models/Type_ticket.js");
 const Ticket = require("../models/Ticket.js");
 
-ticketsRouter.get('/data_form', function (req, res) {
-    Promise.all([
-        find_data(Airline),
-        find_data(Kass),
-        find_data(Cashier),
-        find_data(Client),
-        find_data(Direction),
-        find_data(Type_ticket),
-    ]).then(
-        result => res.send(result),
-        error => alert("Ошибка: " + error.message) // Ошибка: Not Found
-    )
+ticketsRouter.get('/get', function (req, res) {
+    Ticket.
+        find({}).
+        populate('airline').
+        populate('cashier').
+        populate('client').
+        populate('direction').
+        populate('kass').
+        populate('type_ticket').
+        then(
+            result => {
+                res.send(result);
+            },
+            error => {
+                console.log("create_airlines = > err: ", error);
+                res.redirect("./");
+            })
+});
 
+ticketsRouter.get('/get_ticket/:id', function (req, res) {
+    Ticket.
+        find({ _id: req.params.id }).
+        populate('airline').
+        populate('cashier').
+        populate('client').
+        populate('direction').
+        populate('kass').
+        populate('type_ticket').
+        then(
+            result => {
+                res.send(result[0]);
+            },
+            error => {
+                console.log("create_airlines = > err: ", error);
+                res.redirect("./");
+            })
 });
 
 function find_data(data) {
@@ -57,7 +80,7 @@ ticketsRouter.post('/create_ticket', function (req, res) {
         data_sale: req.body.data_sale,
         direction: req.body.direction,
         kass: req.body.kass,
-        number_ticket: req.body.number_ticket,
+        number: req.body.number,
         rate: +req.body.rate,
         type_ticket: req.body.type_ticket,
     });
@@ -65,7 +88,6 @@ ticketsRouter.post('/create_ticket', function (req, res) {
     ticket.save()
         .then(
             result => {
-                console.log(result);
                 res.send("ticket");
             },
             error => {
@@ -74,7 +96,62 @@ ticketsRouter.post('/create_ticket', function (req, res) {
             })
 });
 
+ticketsRouter.get('/data_form', function (req, res) {
+    Promise.all([
+        find_data(Airline),
+        find_data(Kass),
+        find_data(Cashier),
+        find_data(Client),
+        find_data(Direction),
+        find_data(Type_ticket),
+    ]).then(
+        result => res.send(result),
+        error => alert("Ошибка: " + error.message) // Ошибка: Not Found
+    )
 
+});
 
+ticketsRouter.post('/change_ticket', function (req, res) {
+
+    Ticket.updateMany({ _id: req.body.change_ticket_id },
+        {
+            $set: {
+                airline: req.body.airline,
+                cashier: req.body.cashier,
+                client: req.body.client,
+                data_sale: req.body.data_sale,
+                direction: req.body.direction,
+                kass: req.body.kass,
+                number: req.body.number,
+                rate: +req.body.rate,
+                type_ticket: req.body.type_ticket,
+            }
+        }).
+        exec(function (err, result) {
+            if (err) {
+                console.log("change_status/cm_propposal/reserv = > err: ", error);
+                res.redirect("../");
+            } else {
+                res.send("ticket");
+            }
+        });
+
+});
+
+ticketsRouter.post('/delete_ticket', function (req, res) {
+
+    Ticket.
+        deleteMany({ _id: req.body.delete_id }).
+        exec(function (err, result) {
+            if (err) {
+                console.log("change_status/cm_propposal/reserv = > err: ", error);
+                res.redirect("../");
+            } else {
+                console.log("result: ", result);
+                res.send("ticket");
+            }
+        });
+
+});
 
 module.exports = ticketsRouter;

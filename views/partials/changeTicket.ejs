@@ -1,14 +1,14 @@
 <!-- Modal -->
-<div class="modal fade" id="newTicket" tabindex="-1"
+<div class="modal fade" id="changeTicket" tabindex="-1"
   aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Создать билет</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Изменить билет</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
-      <form id="create_ticket_form" class="needs-validation was-validated">
+      <form id="change_ticket_form" class="needs-validation was-validated">
         <div class="modal-body">
           <div class="row">
             <div class="col-3">
@@ -70,10 +70,10 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary"
-            data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary"
-            onclick="createTicket()">Создать</button>
+          <button type="button" class="btn btn-danger"
+          onclick="delete_ticket()">Удалить</button>
+        <button type="button" class="btn btn-primary"
+          onclick="change_ticket()">Изменить</button>
         </div>
       </form>
     </div>
@@ -81,8 +81,8 @@
 </div>
 
 <script>
-  const newTicketModal = document.getElementById('newTicket');
-  newTicketModal.addEventListener('show.bs.modal', event => {
+  const changeTicketModal = document.getElementById('changeTicket');
+  changeTicketModal.addEventListener('show.bs.modal', event => {
     $.ajax({
         url: `/tickets/data_form`,
         type: 'GET',
@@ -110,7 +110,7 @@
   })
 
   function createTicket() {
-    let data_arr = $('#create_ticket_form').serializeArray();
+    let data_arr = $('#change_ticket_form').serializeArray();
     var returnArray = {};
     for (var i = 0; i < data_arr.length; i++){
         returnArray[data_arr[i]['name']] = data_arr[i]['value'];
@@ -118,11 +118,11 @@
 
     console.log(returnArray)
     $.ajax({
-        url: `/tickets/create_ticket`,
+        url: `/tickets/change_ticket`,
         type: 'POST',
         data: returnArray,
         success: function(result) {
-          $('#newTicket').modal('toggle');
+          $('#changeTicket').modal('toggle');
           ticket_table.destroy();
           upload_ticket();
         }

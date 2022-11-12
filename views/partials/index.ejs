@@ -1,85 +1,449 @@
-<div class="card">
-  <div class="card-body">
-    <nav class="navbar bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand">Все билеты</a>
-        <form class="d-flex" role="search" id="search">
-          <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#newTicket">
-            Создать
-          </button>
-        </form>
-      </div>
+<!-- Modal -->
 
-    </nav>
+<div class="modal fade" id="newTicket" tabindex="-1"
+  aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Создать билет</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <form id="create_ticket_form" class="needs-validation was-validated">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-3">
+              <div class="mb-3">
+                <label for="number" class="form-label">Номер билета</label>
+                <input type="text" class="form-control" name="number" required>
+              </div>
+              <div class="mb-3">
+                <label for="type_ticket" class="form-label">Тип билета</label>
+                <select class="form-select" name="type_ticket"
+                  required>
+                </select>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="mb-3">
+                <label for="data_sale" class="form-label">Дата продажи</label>
+                <input type="date" class="form-control" name="data_sale">
+              </div>
+              <div class="mb-3">
+                <label for="kass" class="form-label">Касса</label>
+                <select class="form-select" name="kass" required>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="cashier" class="form-label">Кассир</label>
+                <select class="form-select" name="cashier"
+                  required>
+                </select>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="mb-3">
+                <label for="airline" class="form-label">Авиокомпания</label>
+                <select class="form-select" name="airline"
+                  required>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="direction" class="form-label">Направление</label>
+                <select class="form-select" name="direction"
+                  required>
+                </select>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="mb-3">
+                <label for="rate" class="form-label">Тариф</label>
+                <input type="number" step="0.01" class="form-control"
+                  name="rate" required>
+              </div>
+              <div class="mb-3">
+                <label for="client" class="form-label">Клиент</label>
+                <select class="form-select" name="client" required>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary"
+            data-bs-dismiss="modal">Close</button>
+          <button type="button" disabled class="btn btn-primary"
+            onclick="createTicket()" id="createTicket">Создать</button>
+        </div>
 
-    <div class="accordion" id="accordionExample">
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingOne">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            <div class="row">
-              <div class="col-12" style="margin-bottom: -8%;">
-                <h6 class="text-primary">16 августа 2022</h6><br>
-              </div>
-              <div class="col-12" style="margin-bottom: -8%;">
-                <h5>123456</h5><br>
-              </div>
-              <div class="col-12">
-                text/text/text
-              </div>
-            </div>
-          </button>
-        </h2>
-        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingTwo">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-            <div class="row">
-              <div class="col-12" style="margin-bottom: -8%;">
-                <h6 class="text-primary">16 августа 2022</h6><br>
-              </div>
-              <div class="col-12" style="margin-bottom: -8%;">
-                <h5>123456</h5><br>
-              </div>
-              <div class="col-12">
-                text/text/text
-              </div>
-            </div>
-          </button>
-        </h2>
-        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-          </div>
-        </div>
-      </div>
-      <div class="accordion-item">
-        <h2 class="accordion-header" id="headingThree">
-          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-            <div class="row">
-              <div class="col-12" style="margin-bottom: -8%;">
-                <h6 class="text-primary">16 августа 2022</h6><br>
-              </div>
-              <div class="col-12" style="margin-bottom: -8%;">
-                <h5>123456</h5><br>
-              </div>
-              <div class="col-12">
-                text/text/text
-              </div>
-            </div>
-          </button>
-        </h2>
-        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-          <div class="accordion-body">
-            <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>
+
+<div class="modal fade" id="changeTicket" tabindex="-1"
+  aria-labelledby="changeTicketLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="changeTicketLabel">Изменить билет</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <form id="change_ticket_form" class="needs-validation was-validated">
+        <input type="hidden" id="change_ticket_id" name="change_ticket_id"
+          value="">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-3">
+              <div class="mb-3">
+                <label for="number" class="form-label">Номер билета</label>
+                <input type="text" class="form-control" name="number" required>
+              </div>
+              <div class="mb-3">
+                <label for="type_ticket" class="form-label">Тип билета</label>
+                <select class="form-select" name="type_ticket"
+                  required>
+                </select>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="mb-3">
+                <label for="data_sale" class="form-label">Дата продажи</label>
+                <input type="date" class="form-control" name="data_sale">
+              </div>
+              <div class="mb-3">
+                <label for="kass" class="form-label">Касса</label>
+                <select class="form-select" name="kass" required>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="cashier" class="form-label">Кассир</label>
+                <select class="form-select" name="cashier"
+                  required>
+                </select>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="mb-3">
+                <label for="airline" class="form-label">Авиокомпания</label>
+                <select class="form-select" name="airline"
+                  required>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="direction" class="form-label">Направление</label>
+                <select class="form-select" name="direction"
+                  required>
+                </select>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="mb-3">
+                <label for="rate" class="form-label">Тариф</label>
+                <input type="number" step="0.01" class="form-control"
+                  name="rate" required>
+              </div>
+              <div class="mb-3">
+                <label for="client" class="form-label">Клиент</label>
+                <select class="form-select" name="client" required>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger"
+            onclick="delete_ticket()" >Удалить</button>
+          <button type="button" class="btn btn-primary"
+            onclick="change_ticket()" >Изменить</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Table -->
+<div class="card">
+  <div class="card-body">
+    <table id="tickets_table" class="table table-striped" style="width:100%">
+      <thead>
+        <tr>
+          <th>Info</th>
+          <th>Номер</th>
+          <th>Дата продажи</th>
+          <th>Авиакомпания</th>
+          <th>Направление</th>
+          <th>Стоимость</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><h6 class="text-primary" style="margin-block-end: -4%;">12 июля
+              2022 </h6> <br>
+            <h3 style="margin-block-end: -6%;">12356897</h3> <br>
+            вк/ап/ыв/пр
+          </td>
+          <td>Номер</td>
+          <td>Дата продажи</td>
+          <td>Авиакомпания</td>
+          <td>Направление</td>
+          <td>Стоимость</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Info</th>
+          <th>Номер</th>
+          <th>Дата продажи</th>
+          <th>Авиакомпания</th>
+          <th>Направление</th>
+          <th>Стоимость</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+<!-- Script -->
+<script>
+
+let ticket_table
+
+    $(document).ready(function () {
+
+      upload_ticket_table();
+        fill_form
+      .then(
+      result => {
+        // первая функция-обработчик - запустится при вызове resolve
+        console.log("Ok"); // result - аргумент resolve
+      },
+      error => {
+        // вторая функция - запустится при вызове reject
+        alert("Rejected: " + error); // error - аргумент reject
+      }
+    );
+    });
+
+    $("#create_ticket_form")
+    .on("input", function() {
+      var form = $("#create_ticket_form");
+      form.validate();
+      if (form.valid()) {
+        $("#createTicket").removeAttr("disabled");
+      }
+    });
+
+    function upload_ticket_table() {
+      $.ajax({
+        url: `/tickets/get`,
+        type: 'GET',
+        success: function(tks) {
+            ticket_table = $('#tickets_table').DataTable({
+            language: {"url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Russian.json"},
+            data:tks,
+            dom: 'Bfrtp',
+            //order: [[1, "desc"]], //desc
+            rowId: '_id',
+            displayLength: 10,
+            columnDefs: [
+            {
+                target: 0,
+                searchable: false,
+            },
+            {
+                target: 1,
+                visible: false,
+            },
+            {
+                target: 2,
+                visible: false,
+            },
+            {
+                target: 3,
+                visible: false,
+            },
+            {
+                target: 4,
+                visible: false,
+            },
+            {
+                target: 5,
+                visible: false,
+            },
+],
+            buttons: {
+                  buttons: [{
+                      text: 'Создать',
+                      attr: {
+                        'class': 'btn btn-primary',
+                        'data-bs-toggle': 'modal',
+                        'data-bs-target': '#newTicket'
+                      },
+                      action: function(e, dt, node, config) {
+                      }
+                  }]
+              },
+            columns: [
+              {"data": null,
+                //"width": "12%",
+                "render": function(data, type, row, meta){
+                  return '<h6 class="text-primary" style="margin-block-end: -1%;">' +
+                    new Date(row.data_sale).toLocaleString("ru", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                  })  + 
+                  '</h6> <br> <h4 style="margin-block-end: -1%;">' +
+                    row.number + 
+                    '</h4> <br>' +
+                    row.airline.code +
+                  '/'+
+                  row.airline.name +
+                  '/' +
+                  row.direction.direction +
+                  '/' +
+                  row.rate
+                } },
+              {"data": "number"},
+              {"data": "airline.code"},
+              {"data": "airline.name"},
+              {"data": "direction.direction"},
+              {"data": "rate"},
+              ]
+          });
+        }
+      })
+}
+
+    function createTicket() {
+    let data_arr = $('#create_ticket_form').serializeArray();
+    var returnArray = {};
+    for (var i = 0; i < data_arr.length; i++){
+        returnArray[data_arr[i]['name']] = data_arr[i]['value'];
+    }
+
+    $.ajax({
+        url: `/tickets/create_ticket`,
+        type: 'POST',
+        data: returnArray,
+        success: function(result) {
+          $('#newTicket').modal('toggle');
+          $("#create_ticket_form")[0].reset();
+          $("#change_ticket_form")[0].reset();
+          $("#createTicket").prop('disabled', true);
+          ticket_table.destroy();
+          upload_ticket_table();
+        }
+      })
+  }
+
+    $('#tickets_table tbody').on( 'click', 'tr', function () {
+      var id = $(this).attr('id');
+      $.ajax({
+        url: `/tickets/get_ticket/${id}`,
+        type: 'GET',
+        success:  function(tc) {
+          $("#change_ticket_id").val(id);
+              $(`#change_ticket_form select[name="airline"] option[value=${String(tc.airline._id)}]`).prop('selected', true);
+              $(`#change_ticket_form select[name="kass"] option[value=${String(tc.kass._id)}]`).prop('selected', true);
+              $(`#change_ticket_form select[name="cashier"] option[value=${String(tc.cashier._id)}]`).prop('selected', true);
+              $(`#change_ticket_form select[name="client"] option[value=${String(tc.client._id)}]`).prop('selected', true);
+              $(`#change_ticket_form select[name="direction"] option[value=${String(tc.direction._id)}]`).prop('selected', true);
+              $(`#change_ticket_form select[name="type_ticket"] option[value=${String(tc.type_ticket._id)}]`).prop('selected', true);
+              $(`#change_ticket_form input[name="number"]`).val(`${tc.number}`);
+              $(`#change_ticket_form input[name="data_sale"]`).val(`${new Date(tc.data_sale).getFullYear()}-${new Date(tc.data_sale).getMonth()}-${new Date(tc.data_sale).getDate()}`);
+              $(`#change_ticket_form input[name="rate"]`).val(`${tc.rate}`);
+              let changeModal = new bootstrap.Modal( document.getElementById("changeTicket"), {});
+              changeModal.show()
+        }
+      })
+
+    });
+
+    function change_ticket() {
+      var form = $("#change_ticket_form");
+      form.validate();
+      if (form.valid()) {
+        let data_arr = $('#change_ticket_form').serializeArray();
+        var returnArray = {};
+        for (var i = 0; i < data_arr.length; i++){
+          returnArray[data_arr[i]['name']] = data_arr[i]['value'];
+        }
+
+      $.ajax({
+        url: `/tickets/change_ticket`,
+        type: 'POST',
+        data: returnArray,
+        success: function(result) {
+          $('#changeTicket').modal('toggle');
+          $("#create_ticket_form")[0].reset();
+          $("#change_ticket_form")[0].reset();
+          ticket_table.destroy();
+          upload_ticket_table();
+        }
+      })
+    
+      }
+
+
+}
+
+    function delete_ticket() {
+      let data = {
+        delete_id: $("#change_ticket_id").val()
+      }
+
+      $.ajax({
+        url: `/tickets/delete_ticket`,
+        type: 'POST',
+        data: data,
+        success: function(result) {
+          if(result){
+            $('#changeTicket').modal('toggle');
+          $("#create_ticket_form")[0].reset();
+          $("#change_ticket_form")[0].reset();
+          ticket_table.destroy();
+          upload_ticket_table();
+          }
+        }
+      })
+    }
+
+
+
+
+
+    let fill_form = new Promise((resolve, reject) => {
+
+      $.ajax({
+        url: `/tickets/data_form`,
+        type: 'GET',
+        success: function(rs) {
+          rs[0].forEach(element => {
+            $('select[name="airline"]').append(`<option value="${element._id}">${element.name}</option>`);
+          });
+          rs[1].forEach(element => {
+            $('select[name="kass"]').append(`<option value="${element._id}">${element.number}</option>`);
+          });
+          rs[2].forEach(element => {
+            $('select[name="cashier"]').append(`<option value="${element._id}">${element.name}</option>`);
+          });
+          rs[3].forEach(element => {
+            $('select[name="client"]').append(`<option value="${element._id}">${element.name}</option>`);
+          });
+          rs[4].forEach(element => {
+            $('select[name="direction"]').append(`<option value="${element._id}">${element.direction}</option>`);
+          });
+          rs[5].forEach(element => {
+            $('select[name="type_ticket"]').append(`<option value="${element._id}">${element.type_ticket}</option>`);
+          });
+          resolve("result");
+        }
+      })
+
+});
+
+
+</script>
