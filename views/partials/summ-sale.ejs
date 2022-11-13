@@ -1,0 +1,100 @@
+<div class="card">
+    <div class="card-body">
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Билеты по авиакомпаниям</h5>
+        <div>
+            <table id="summ_sale_table" class="table table-striped"
+            style="width:100%">
+            <thead>
+              <tr>
+                <th>Название</th>
+                <th>Колличество билетов</th>
+                <th>Сумма</th>
+              </tr>
+            </thead>
+            <tbody>
+  
+            </tbody>
+            <tfoot>
+              <tr>
+                <th>Название</th>
+                <th>Колличество билетов</th>
+                <th>Сумма</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+    });
+
+    $('#pills-summ-sale-tab').on('shown.bs.tab', function (e) {
+        console.log("Открыто");
+        $.ajax({
+            url: `/info/summ_sale`,
+            type: 'GET',
+            success: function(data) {
+                console.log(data);
+
+                let labels = data.map(item => item._id);
+
+                let summ_s = data.map(item => item.tickets.reduce((sum, el) => sum + el.rate, 0));
+
+                const data_chart = {
+                  labels: labels,
+                  datasets: [{
+                    label: 'Продажи по авиакомпаниям',
+                    data: summ_s,
+                    backgroundColor: 'rgba(13, 110, 251, 1)',
+                    borderWidth: 1
+                  }]
+                };
+                
+                const config = {
+                  type: 'bar',
+                  data: data_chart,
+                  options: {
+                  },
+                };
+
+                const myChart = new Chart(
+                  document.getElementById('myChart'),
+                  config
+                );
+                //                al.forEach(element => {
+//                    $('#airline').append(`<option value="${element._id}">${element.code}/${element.name}</option>`);
+//                });
+                client_table = $('#summ_sale_table').DataTable({
+                  language: {"url": "https://cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Russian.json"},
+                  data: data,
+                  dom: 'frtp',
+                  order: [[1, "desc"]], //desc
+                  displayLength: 10,
+                  columns: [
+                    {"data": "_id"},
+                    {"data": null,
+                    "render": function(data, type, row, meta){
+                      return data.tickets.length
+                    } },
+                    {"data": null,
+                    "render": function(data, type, row, meta){
+                      return data.tickets.reduce((sum, el) => sum + el.rate, 0);
+                    } },
+                    ]
+                });
+        
+            }
+        })
+});
+</script>

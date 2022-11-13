@@ -1,0 +1,239 @@
+<div class="card">
+    <div class="card-body">
+        <form id="tickets_period_form">
+            <div class="row">
+                <div class="col-form-label">
+                    <label for="airline" class="form-label">Авиакомпания</label>
+                    <select class="form-select" name="airline" id="airline"
+                        required>
+
+                    </select>
+                </div>
+            </div>
+            <div style="text-align: center;" class="mt-4 mb-4">
+
+                <div class="form-check " style="display: inline-block;
+                    padding-left: 0.5em;">
+                    <input type="radio" class="btn-check" name="month" id="1"
+                        value="1" required>
+                    <label class="btn btn-outline-primary" for="1">Январь</label>
+                </div>
+
+                <div class="form-check " style="display: inline-block;
+                    padding-left: 0.5em;">
+                    <input type="radio" class="btn-check" name="month" id="2"
+                        value="2">
+                    <label class="btn btn-outline-primary" for="2">Февраль</label>
+                </div>
+
+                <div class="form-check " style="display: inline-block;
+                    padding-left: 0.5em;">
+                    <input type="radio" class="btn-check" name="month" id="3"
+                        value="3">
+                    <label class="btn btn-outline-primary" for="3">Март</label>
+                </div>
+
+                <div class="form-check " style="display: inline-block;
+                    padding-left: 0.5em;">
+                    <input type="radio" class="btn-check" name="month" id="4"
+                        value="4">
+                    <label class="btn btn-outline-primary" for="4">Апрель</label>
+                </div>
+
+                <div class="form-check " style="display: inline-block;
+                    padding-left: 0.5em;">
+                    <input type="radio" class="btn-check" name="month" id="5"
+                        value="5">
+                    <label class="btn btn-outline-primary" for="5">Май</label>
+                </div>
+
+                <div class="form-check " style="display: inline-block;
+                    padding-left: 0.5em;">
+                    <input type="radio" class="btn-check" name="month" id="6"
+                        value="6">
+                    <label class="btn btn-outline-primary" for="6">Июнь</label>
+                </div>
+
+                <div class="form-check " style="display: inline-block;
+                    padding-left: 0.5em;">
+                    <input type="radio" class="btn-check" name="month" id="7"
+                        value="7">
+                    <label class="btn btn-outline-primary" for="7">Июль</label>
+                </div>
+
+                <div class="form-check " style="display: inline-block;
+                    padding-left: 0.5em;">
+                    <input type="radio" class="btn-check" name="month" id="8"
+                        value="8">
+                    <label class="btn btn-outline-primary" for="8">Август</label>
+                </div>
+
+                <div class="form-check " style="display: inline-block;
+                    padding-left: 0.5em;">
+                    <input type="radio" class="btn-check" name="month" id="9"
+                        value="9">
+                    <label class="btn btn-outline-primary" for="9">Сентябрь</label>
+                </div>
+
+                <div class="form-check " style="display: inline-block;
+                    padding-left: 0.5em;">
+                    <input type="radio" class="btn-check" name="month" id="10"
+                        value="10">
+                    <label class="btn btn-outline-primary" for="10">Октябрь</label>
+                </div>
+
+                <div class="form-check " style="display: inline-block;
+                    padding-left: 0.5em;">
+                    <input type="radio" class="btn-check" name="month" id="11"
+                        value="11">
+                    <label class="btn btn-outline-primary" for="11">Ноябрь</label>
+                </div>
+
+                <div class="form-check " style="display: inline-block;
+                    padding-left: 0.5em;">
+                    <input type="radio" class="btn-check" name="month" id="12"
+                        value="12">
+                    <label class="btn btn-outline-primary" for="12">Декабрь</label>
+                </div>
+
+            </div>
+        </form>
+        <div class="row mb-3">
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Всего продано билетов</h5>
+                        <p id="quantity"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Сумма по графе тариф</h5>
+                        <p id="summ"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Билеты авиакомпании: <span id="name_airline"></span> </h5>
+                <div class="accordion" id="accordionTickets">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+$(document).ready(function () {
+
+    $.ajax({
+        url: `/catalogs/airlines`,
+        type: 'GET',
+        success: function(al) {
+            al.forEach(element => {
+                $('#airline').append(`<option value="${element._id}">${element.code}/${element.name}</option>`);
+            });
+        }
+    })
+ });
+
+$("#tickets_period_form")
+    .on("input", function() {
+        $("#quantity").text("");
+        $("#name_airline").text(``);
+        $("#summ").text("0");
+        $('#accordionTickets').empty();
+        var month = $('input[name="month"]:checked').val();
+        if (month) {
+            let data_arr = $('#tickets_period_form').serializeArray();
+            var returnArray = {};
+            for (var i = 0; i < data_arr.length; i++){
+                returnArray[data_arr[i]['name']] = data_arr[i]['value'];
+            }
+
+            $.ajax({
+                url: `/info/tickets_period`,
+                type: 'POST',
+                data: returnArray,
+                success: function(al) {
+                    console.log(al);
+                    $("#quantity").text(al.length);
+                    $("#name_airline").text(`${al[0].airline.code}/${al[0].airline.name}`);
+                    let summ = al.reduce((sum, el) => sum + el.rate, 0);
+                    $("#summ").text(summ.toLocaleString("fr"));
+                    $('#accordionTickets').empty();
+                    al.forEach(el => {
+                    $( "#accordionTickets" ).append( 
+                    `<div class="accordion-item">`+
+                      `<h2 class="accordion-header" id="heading_${el._id}">`+
+                        `<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_${el._id}" aria-expanded="true" aria-controls="collapse_${el._id}">`+
+                          `<div class="row">`+
+                            `<div class="col-12">`+
+
+                                `<h5 class="text-primary">${el.rate}</h5>`+
+                            `</div>`+
+                            `<div class="col-12">`+
+                                `<h4>${el.number}</h4>`+
+                            `</div>`+
+                            `<div class="col-12">` +
+                              new Date(el.data_sale).toLocaleString("ru", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric"
+                              }) + `</div>`+
+                          `</div>`+
+                        `</button>`+
+                      `</h2>`+
+                      `<div id="collapse_${el._id}" class="accordion-collapse collapse" aria-labelledby="heading_${el._id}" data-bs-parent="#accordionExample">`+
+                        `<div class="accordion-body">`+
+                          `<div class="row">`+
+                            `<div class="col-3">`+
+                                '<h6 class="text-black-50">Номер</h6>'+
+                                `<div class="mb-3">${el.number}</div>`+
+                                '<h6 class="text-black-50">Тип билета</h6>'+
+                                `<div class="mb-3">${el.type_ticket.type_ticket}</div>`+
+                            `</div>`+
+                            `<div class="col-3">`+
+                                '<h6 class="text-black-50">Дата продажи</h6>'+
+                                `<div class="mb-3">`+
+                              new Date(el.data_sale).toLocaleString("ru", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric"
+                              }) + `</div>`+
+                              '<h6 class="text-black-50">Касса</h6>'+
+                                `<div class="mb-3">${el.kass.number}</div>`+
+                                '<h6 class="text-black-50">Кассир</h6>'+
+                                `<div class="mb-3">${el.cashier.name}</div>`+
+                            `</div>`+
+                            `<div class="col-3">`+
+                                '<h6 class="text-black-50">Авиакомпания</h6>'+
+                                `<div class="mb-3">${el.airline.name}</div>`+
+                                '<h6 class="text-black-50">Направление</h6>'+
+                                `<div class="mb-3">${el.direction.direction}</div>`+
+                            `</div>`+
+                            `<div class="col-3">`+
+                                '<h6 class="text-black-50">Тариф</h6>'+
+                                `<div class="mb-3">${el.rate.toLocaleString("fr")}</div>`+
+                                '<h6 class="text-black-50">Клиент</h6>'+
+                                `<div class="mb-3">${el.client.name}</div>`+
+                            `</div>`+
+                          `</div>`+
+                        `</div>`+
+                      `</div>`+
+                    `</div>`
+                    );
+                    });
+                }
+            })
+        }
+    });
+
+
+
+</script>

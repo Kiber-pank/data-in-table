@@ -2,6 +2,23 @@
 <html>
 <head>
   <%- include ("../partials/header.ejs") %>
+
+  <link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css"/>
+<link rel="stylesheet" type="text/css"
+  href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css"/>
+<link rel="stylesheet" type="text/css"
+  href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css"
+  />
+<script type="text/javascript"
+  src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+  src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+<script
+  src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body>
@@ -42,7 +59,27 @@
       </div>
     </nav>
     <% if (user) { %>
-      <%- include ("../partials/info.ejs") %>
+      
+      <div class="card">
+        <div class="card-body">
+          <ul class="nav justify-content-center nav-pills mb-3" id="pills-tab" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button class="nav-link active" id="pills-tickets-period-tab" data-bs-toggle="pill" data-bs-target="#pills-tickets-period" type="button" role="tab" aria-controls="pills-tickets-period" aria-selected="true">Билеты за период</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="pills-summ-sale-tab" data-bs-toggle="pill" data-bs-target="#pills-summ-sale" type="button" role="tab" aria-controls="pills-summ-sale" aria-selected="false">Сумма продаж</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link" id="pills-clients-list-tab" data-bs-toggle="pill" data-bs-target="#pills-clients-list" type="button" role="tab" aria-controls="pills-clients-list" aria-selected="false">Список по компаниям</button>
+            </li>
+          </ul>
+          <div class="tab-content" id="pills-tabContent">
+            <div class="tab-pane fade show active" id="pills-tickets-period" role="tabpanel" aria-labelledby="pills-tickets-period-tab"><%- include ("../partials/tickets-period.ejs") %></div>
+            <div class="tab-pane fade" id="pills-summ-sale" role="tabpanel" aria-labelledby="pills-summ-sale-tab"><%- include ("../partials/summ-sale.ejs") %></div>
+            <div class="tab-pane fade" id="pills-clients-list" role="tabpanel" aria-labelledby="pills-clients-list-tab"><%- include ("../partials/clients-list.ejs") %></div>
+          </div>
+        </div>
+      </div>
     <% } %>
 
   </div>
