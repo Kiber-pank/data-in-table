@@ -7,7 +7,6 @@ randomRouter.get('/', function (req, res) {
 });
 
 randomRouter.get('/summ_sale', function (req, res) {
-    console.log("Пришло")
     Ticket.aggregate([
         // Join with user_info table
         {
@@ -29,11 +28,27 @@ randomRouter.get('/summ_sale', function (req, res) {
                 res.send(result);
             },
             error => {
-                console.log("create_airlines = > err: ", error);
+                console.log("summ_sale = > err: ", error);
                 res.redirect("./");
             })
 });
 
+
+
+randomRouter.post('/airline_client', function (req, res) {
+    Ticket.find({
+        airline: req.body.id_airline
+    }).
+        populate('client').
+        then(
+            result => {
+                res.send(result);
+            },
+            error => {
+                console.log("airline_client = > err: ", error);
+                res.redirect("./");
+            })
+})
 
 
 
@@ -67,7 +82,7 @@ randomRouter.post('/tickets_period', function (req, res) {
                 res.send(result);
             },
             error => {
-                console.log("create_airlines = > err: ", error);
+                console.log("tickets_period = > err: ", error);
                 res.redirect("./");
             })
 

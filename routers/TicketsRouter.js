@@ -22,7 +22,7 @@ ticketsRouter.get('/get', function (req, res) {
                 res.send(result);
             },
             error => {
-                console.log("create_airlines = > err: ", error);
+                console.log("get = > err: ", error);
                 res.redirect("./");
             })
 });
@@ -41,7 +41,7 @@ ticketsRouter.get('/get_ticket/:id', function (req, res) {
                 res.send(result[0]);
             },
             error => {
-                console.log("create_airlines = > err: ", error);
+                console.log("get_ticket_id = > err: ", error);
                 res.redirect("./");
             })
 });
@@ -91,7 +91,7 @@ ticketsRouter.post('/create_ticket', function (req, res) {
                 res.send("ticket");
             },
             error => {
-                console.log("create_airlines = > err: ", error);
+                console.log("create_ticket = > err: ", error);
                 res.redirect("./");
             })
 });
@@ -129,7 +129,7 @@ ticketsRouter.post('/change_ticket', function (req, res) {
         }).
         exec(function (err, result) {
             if (err) {
-                console.log("change_status/cm_propposal/reserv = > err: ", error);
+                console.log("change_ticket = > err: ", error);
                 res.redirect("../");
             } else {
                 res.send("ticket");
@@ -144,10 +144,9 @@ ticketsRouter.post('/delete_ticket', function (req, res) {
         deleteMany({ _id: req.body.delete_id }).
         exec(function (err, result) {
             if (err) {
-                console.log("change_status/cm_propposal/reserv = > err: ", error);
+                console.log("delete_ticket = > err: ", error);
                 res.redirect("../");
             } else {
-                console.log("result: ", result);
                 res.send("ticket");
             }
         });

@@ -40,12 +40,10 @@
     });
 
     $('#pills-summ-sale-tab').on('shown.bs.tab', function (e) {
-        console.log("Открыто");
         $.ajax({
             url: `/info/summ_sale`,
             type: 'GET',
             success: function(data) {
-                console.log(data);
 
                 let labels = data.map(item => item._id);
 

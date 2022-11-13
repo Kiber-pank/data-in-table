@@ -116,7 +116,6 @@
         returnArray[data_arr[i]['name']] = data_arr[i]['value'];
     }
 
-    console.log(returnArray)
     $.ajax({
         url: `/tickets/change_ticket`,
         type: 'POST',

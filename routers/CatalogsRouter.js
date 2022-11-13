@@ -25,10 +25,10 @@ catalogsRouter.post('/change_chapter', function (req, res) {
                 }).
                 exec(function (err, result) {
                     if (err) {
-                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        console.log("change_chapter = > err: ", error);
                         res.redirect("../");
                     } else {
-                        console.log("result: ", result);
+
                         res.send("airline");
                     }
                 });
@@ -43,7 +43,7 @@ catalogsRouter.post('/change_chapter', function (req, res) {
                 }).
                 exec(function (err, result) {
                     if (err) {
-                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        console.log("change_chapter = > err: ", error);
                         res.redirect("../");
                     } else {
                         res.send("kass");
@@ -60,7 +60,7 @@ catalogsRouter.post('/change_chapter', function (req, res) {
                 }).
                 exec(function (err, result) {
                     if (err) {
-                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        console.log("change_chapter = > err: ", error);
                         res.redirect("../");
                     } else {
                         res.send("cashier");
@@ -78,10 +78,10 @@ catalogsRouter.post('/change_chapter', function (req, res) {
                 }).
                 exec(function (err, result) {
                     if (err) {
-                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        console.log("change_chapter = > err: ", error);
                         res.redirect("../");
                     } else {
-                        console.log("result: ", result);
+
                         res.send("client");
                     }
                 });
@@ -95,10 +95,10 @@ catalogsRouter.post('/change_chapter', function (req, res) {
                 }).
                 exec(function (err, result) {
                     if (err) {
-                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        console.log("change_chapter = > err: ", error);
                         res.redirect("../");
                     } else {
-                        console.log("result: ", result);
+
                         res.send("direction");
                     }
                 });
@@ -112,10 +112,10 @@ catalogsRouter.post('/change_chapter', function (req, res) {
                 }).
                 exec(function (err, result) {
                     if (err) {
-                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        console.log("change_chapter = > err: ", error);
                         res.redirect("../");
                     } else {
-                        console.log("result: ", result);
+
                         res.send("type_ticket");
                     }
                 });
@@ -135,10 +135,10 @@ catalogsRouter.post('/delete_chapter', function (req, res) {
                 deleteMany({ _id: req.body.changeable_id }).
                 exec(function (err, result) {
                     if (err) {
-                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        console.log("delete_chapter = > err: ", error);
                         res.redirect("../");
                     } else {
-                        console.log("result: ", result);
+
                         res.send("airline");
                     }
                 });
@@ -149,10 +149,10 @@ catalogsRouter.post('/delete_chapter', function (req, res) {
                 deleteMany({ _id: req.body.changeable_id }).
                 exec(function (err, result) {
                     if (err) {
-                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        console.log("delete_chapter = > err: ", error);
                         res.redirect("../");
                     } else {
-                        console.log("result: ", result);
+
                         res.send("kass");
                     }
                 });
@@ -163,10 +163,10 @@ catalogsRouter.post('/delete_chapter', function (req, res) {
                 deleteMany({ _id: req.body.changeable_id }).
                 exec(function (err, result) {
                     if (err) {
-                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        console.log("delete_chapter = > err: ", error);
                         res.redirect("../");
                     } else {
-                        console.log("result: ", result);
+
                         res.send("cashier");
                     }
                 });
@@ -176,10 +176,10 @@ catalogsRouter.post('/delete_chapter', function (req, res) {
                 deleteMany({ _id: req.body.changeable_id }).
                 exec(function (err, result) {
                     if (err) {
-                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        console.log("delete_chapter = > err: ", error);
                         res.redirect("../");
                     } else {
-                        console.log("result: ", result);
+
                         res.send("client");
                     }
                 });
@@ -190,10 +190,10 @@ catalogsRouter.post('/delete_chapter', function (req, res) {
                 deleteMany({ _id: req.body.changeable_id }).
                 exec(function (err, result) {
                     if (err) {
-                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        console.log("delete_chapter = > err: ", error);
                         res.redirect("../");
                     } else {
-                        console.log("result: ", result);
+
                         res.send("direction");
                     }
                 });
@@ -203,10 +203,10 @@ catalogsRouter.post('/delete_chapter', function (req, res) {
                 deleteMany({ _id: req.body.changeable_id }).
                 exec(function (err, result) {
                     if (err) {
-                        console.log("change_status/cm_propposal/reserv = > err: ", error);
+                        console.log("delete_chapter = > err: ", error);
                         res.redirect("../");
                     } else {
-                        console.log("result: ", result);
+
                         res.send("type_ticket");
                     }
                 });
@@ -238,7 +238,7 @@ catalogsRouter.get('/airline/:id', function (req, res) {
                 res.send(result[0]);
             },
             error => {
-                console.log("get_airlines = > err: ", error);
+                console.log("get_airlines_id = > err: ", error);
                 res.redirect("./");
             })
 });
@@ -254,7 +254,7 @@ catalogsRouter.post('/create_airlines', function (req, res) {
     airline.save()
         .then(
             result => {
-                console.log(result);
+
                 res.send("airline");
             },
             error => {
@@ -284,7 +284,7 @@ catalogsRouter.get('/kass/:id', function (req, res) {
                 res.send(result[0]);
             },
             error => {
-                console.log("get_kasses = > err: ", error);
+                console.log("get_kasses_id = > err: ", error);
                 res.redirect("./");
             })
 });
@@ -299,7 +299,7 @@ catalogsRouter.post('/create_kasses', function (req, res) {
     kass.save()
         .then(
             result => {
-                console.log(result);
+
                 res.send(result);
             },
             error => {
@@ -329,7 +329,7 @@ catalogsRouter.get('/cashier/:id', function (req, res) {
                 res.send(result[0]);
             },
             error => {
-                console.log("get_cashiers = > err: ", error);
+                console.log("get_cashiers_id = > err: ", error);
                 res.redirect("./");
             })
 });
@@ -344,7 +344,7 @@ catalogsRouter.post('/create_cashiers', function (req, res) {
     cashier.save()
         .then(
             result => {
-                console.log(result);
+
                 res.send("cashier");
             },
             error => {
@@ -374,7 +374,7 @@ catalogsRouter.get('/client/:id', function (req, res) {
                 res.send(result[0]);
             },
             error => {
-                console.log("get_clients = > err: ", error);
+                console.log("get_clients_id = > err: ", error);
                 res.redirect("./");
             })
 });
@@ -390,7 +390,7 @@ catalogsRouter.post('/create_clients', function (req, res) {
     client.save()
         .then(
             result => {
-                console.log(result);
+
                 res.send("client");
             },
             error => {
@@ -420,7 +420,7 @@ catalogsRouter.get('/direction/:id', function (req, res) {
                 res.send(result[0]);
             },
             error => {
-                console.log("get_airlines = > err: ", error);
+                console.log("get_direction_id = > err: ", error);
                 res.redirect("./");
             })
 });
@@ -434,11 +434,11 @@ catalogsRouter.post('/create_directions', function (req, res) {
     direction.save()
         .then(
             result => {
-                console.log(result);
+
                 res.send("direction");
             },
             error => {
-                console.log("create_airlines = > err: ", error);
+                console.log("create_directions = > err: ", error);
                 res.redirect("./");
             })
 });
@@ -452,7 +452,7 @@ catalogsRouter.get('/type_tickets', function (req, res) {
                 res.send(result);
             },
             error => {
-                console.log("get_directions = > err: ", error);
+                console.log("get_type_tickets = > err: ", error);
                 res.redirect("./");
             })
 });
@@ -464,7 +464,7 @@ catalogsRouter.get('/type_ticket/:id', function (req, res) {
                 res.send(result[0]);
             },
             error => {
-                console.log("get_airlines = > err: ", error);
+                console.log("get_type_tickets_id = > err: ", error);
                 res.redirect("./");
             })
 });
@@ -478,11 +478,11 @@ catalogsRouter.post('/create_type_tickets', function (req, res) {
     type_ticket.save()
         .then(
             result => {
-                console.log(result);
+
                 res.send("type_ticket");
             },
             error => {
-                console.log("create_airlines = > err: ", error);
+                console.log("create_type_tickets = > err: ", error);
                 res.redirect("./");
             })
 });

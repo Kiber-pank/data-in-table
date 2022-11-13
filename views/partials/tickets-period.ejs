@@ -161,7 +161,6 @@ $("#tickets_period_form")
                 type: 'POST',
                 data: returnArray,
                 success: function(al) {
-                    console.log(al);
                     $("#quantity").text(al.length);
                     $("#name_airline").text(`${al[0].airline.code}/${al[0].airline.name}`);
                     let summ = al.reduce((sum, el) => sum + el.rate, 0);
